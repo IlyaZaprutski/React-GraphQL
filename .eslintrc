@@ -1,0 +1,22 @@
+{
+    "parser": "babel-eslint",
+    "extends": "airbnb",
+    "globals": {
+        "document": true
+    },
+    "rules": {
+        "indent": ["error", 4],
+        "react/jsx-indent": ["error", 4],
+        "react/jsx-indent-props": ["error", 4],
+        "react/no-array-index-key": "none",
+        "import/no-extraneous-dependencies": "none",
+        "jsx-a11y/no-static-element-interactions": "none",
+        "jsx-a11y/click-events-have-key-events": "none",
+        "jsx-a11y/anchor-is-valid": "none",
+        "jsx-a11y/label-has-for": "none",
+        "import/no-unresolved": "none",
+        "import/extensions": "never",
+        "import/prefer-default-export": "none",
+        "linebreak-style": "off"
+    }
+}
