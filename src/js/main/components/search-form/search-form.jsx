@@ -4,13 +4,13 @@ import classnames from 'classnames';
 
 import Paper from 'material-ui/Paper';
 import TextField from 'material-ui/TextField';
-import RaisedButton from 'material-ui/RaisedButton';
 
 import './search-form.scss';
 
 export default class SearchForm extends React.PureComponent {
     static propTypes = {
-        onClickSearchBtn: PropTypes.func.isRequired,
+        searchString: PropTypes.string.isRequired,
+        onChangeSearchString: PropTypes.func.isRequired,
         title: PropTypes.string,
         classNames: PropTypes.string,
     };
@@ -20,21 +20,18 @@ export default class SearchForm extends React.PureComponent {
         classNames: '',
     };
 
-    state = {
-        searchString: '',
-    };
-
     onChangeSearchString = (e, val) => {
-        this.setState({ searchString: val });
+        this.props.onChangeSearchString(val);
     };
 
-    onClickSearchBtn = () => {
-        this.props.onClickSearchBtn(this.state.searchString);
+    onHandleESCBtn = (e) => {
+        if (e.keyCode === 27) {
+            this.props.onChangeSearchString('');
+        }
     };
 
     render() {
-        const { title, classNames } = this.props;
-        const { searchString } = this.state;
+        const { title, classNames, searchString } = this.props;
 
         const searchFormClassNames = classnames('search-form', classNames);
 
@@ -48,13 +45,8 @@ export default class SearchForm extends React.PureComponent {
                         floatingLabelText="Search"
                         value={searchString}
                         onChange={this.onChangeSearchString}
-                    />
-
-                    <RaisedButton
-                        className="search-form__search-btn"
-                        label="Search"
-                        primary
-                        onClick={this.onClickSearchBtn}
+                        onKeyDown={this.onHandleESCBtn}
+                        fullWidth
                     />
                 </Paper>
             </div>

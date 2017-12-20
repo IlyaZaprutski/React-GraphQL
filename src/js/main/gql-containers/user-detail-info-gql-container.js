@@ -1,32 +1,8 @@
-import gql from 'graphql-tag';
 import { graphql } from 'react-apollo';
 
 import UserDetailInfo from 'main/components/user-detail-info/user-detail-info';
 
-const GetUserDetailInfoQuery = gql`
-    query GetUserDetailInfo($userId: ID!) {
-        node(id: $userId) {
-            ... on User {
-                login
-                avatarUrl
-                id
-                name
-                repositories(first: 100) {
-                    edges {
-                        node {
-                            id
-                            name
-                            description
-                            issues {
-                                totalCount
-                            }
-                        }
-                    }
-                }
-            }
-        }
-    }
-`;
+import { GetUserDetailInfoQuery } from 'main/queries/user-queries';
 
 export default graphql(GetUserDetailInfoQuery, {
     props: ({ data }) => {

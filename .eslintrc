@@ -18,6 +18,12 @@
         "import/no-unresolved": "none",
         "import/extensions": "never",
         "import/prefer-default-export": "none",
-        "linebreak-style": "off"
+        "linebreak-style": "off",
+        "no-underscore-dangle": [
+            "error",
+            {
+                "allow": ["__typename"]
+            }
+        ]
     }
 }

@@ -9,6 +9,6 @@ export default connect(
         searchString: state.mainInfo.get('searchString'),
     }),
     dispatch => ({
-        onClickSearchBtn: searchString => dispatch(changeSearchString(searchString)),
+        onChangeSearchString: searchString => dispatch(changeSearchString(searchString)),
     }),
 )(SearchForm);

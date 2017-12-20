@@ -12,12 +12,13 @@ import {
     TableRowColumn,
 } from 'material-ui/Table';
 import CircularProgress from 'material-ui/CircularProgress';
+import RaisedButton from 'material-ui/RaisedButton';
 
 import UserDetailInfoGQLContainer from 'main/gql-containers/user-detail-info-gql-container';
 
 import './results-panel.scss';
 
-export default class ResultsPanel extends React.PureComponent {
+export default class ResultsPanel extends React.Component {
     static propTypes = {
         isLoading: PropTypes.bool.isRequired,
         users: PropTypes.arrayOf(PropTypes.shape({
@@ -26,12 +27,22 @@ export default class ResultsPanel extends React.PureComponent {
             avatarUrl: PropTypes.string.isRequired,
         })).isRequired,
         selectedUserId: PropTypes.string.isRequired,
+        usersCount: PropTypes.number.isRequired,
         onSelectUser: PropTypes.func.isRequired,
+        onLoadUsers: PropTypes.func,
+    };
+
+    static defaultProps = {
+        onLoadUsers: () => {},
     };
 
     state = {
         isUserDetailInfoOpened: false,
     };
+
+    shouldComponentUpdate() {
+        return true;
+    }
 
     onClickToAvatar = (user) => {
         this.props.onSelectUser(user.id);
@@ -91,11 +102,22 @@ export default class ResultsPanel extends React.PureComponent {
 
     render() {
         const { isUserDetailInfoOpened } = this.state;
-        const { selectedUserId } = this.props;
+        const {
+            selectedUserId, usersCount, users, onLoadUsers,
+        } = this.props;
 
         return (
             <div className="results-panel">
                 <Paper className="results-panel__paper-container" zDepth={3}>
+                    <h4>{`All users count : ${usersCount}`}</h4>
+                    <h4>{`Current number of users: ${users.length}`}</h4>
+                    <RaisedButton
+                        label="Load more"
+                        primary
+                        onClick={onLoadUsers}
+                        disabled={usersCount === users.length}
+                    />
+
                     {this.getContent()}
 
                     {isUserDetailInfoOpened && (

@@ -41,6 +41,7 @@ export default class LoginForm extends React.PureComponent {
                         floatingLabelText="Login"
                         value={login}
                         onChange={this.onChangeLogin}
+                        fullWidth
                     />
 
                     <TextField
@@ -50,6 +51,7 @@ export default class LoginForm extends React.PureComponent {
                         value={password}
                         type="password"
                         onChange={this.onChangePassword}
+                        fullWidth
                     />
 
                     <RaisedButton
