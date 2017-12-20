@@ -11,8 +11,8 @@ import {
 
 const AuthenticationRecord = Record({
     isHaveAccess: false,
-    login: 'IlyaZaprutski',
-    password: 'lampard8',
+    login: '',
+    password: '',
     token: '',
 });
 
