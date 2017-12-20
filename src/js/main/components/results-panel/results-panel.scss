@@ -1,0 +1,14 @@
+.results-panel {
+    &__paper-container {
+        margin-top: 20px;
+        padding: 15px;
+    }
+
+    &__row {
+        cursor: pointer;
+    }
+
+    &__spinner-container {
+        text-align: center;
+    }
+}
