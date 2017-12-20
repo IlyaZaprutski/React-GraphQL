@@ -4,7 +4,6 @@ import { Record } from 'immutable';
 import { changeSearchString, changeSelectedUser } from 'main/actions/main-actions';
 
 const MainRecord = Record({
-    token: '',
     searchString: '',
     selectedUserId: '',
 });

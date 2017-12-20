@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import classnames from 'classnames';
 
 import Paper from 'material-ui/Paper';
 import Avatar from 'material-ui/Avatar';
@@ -18,7 +19,7 @@ import UserDetailInfoGQLContainer from 'main/gql-containers/user-detail-info-gql
 
 import './results-panel.scss';
 
-export default class ResultsPanel extends React.Component {
+export default class ResultsPanel extends React.PureComponent {
     static propTypes = {
         isLoading: PropTypes.bool.isRequired,
         users: PropTypes.arrayOf(PropTypes.shape({
@@ -30,19 +31,17 @@ export default class ResultsPanel extends React.Component {
         usersCount: PropTypes.number.isRequired,
         onSelectUser: PropTypes.func.isRequired,
         onLoadUsers: PropTypes.func,
+        classNames: PropTypes.string,
     };
 
     static defaultProps = {
         onLoadUsers: () => {},
+        classNames: '',
     };
 
     state = {
         isUserDetailInfoOpened: false,
     };
-
-    shouldComponentUpdate() {
-        return true;
-    }
 
     onClickToAvatar = (user) => {
         this.props.onSelectUser(user.id);
@@ -73,41 +72,45 @@ export default class ResultsPanel extends React.Component {
         }
 
         return (
-            <Table>
-                <TableHeader displaySelectAll={false} adjustForCheckbox={false}>
-                    <TableRow>
-                        <TableHeaderColumn>Avatar</TableHeaderColumn>
-                        <TableHeaderColumn>Name</TableHeaderColumn>
-                    </TableRow>
-                </TableHeader>
-                <TableBody displayRowCheckbox={false}>
-                    {users.map(user => (
-                        <TableRow className="results-panel__row" key={user.id}>
-                            <TableRowColumn>
-                                <Avatar
-                                    src={user.avatarUrl}
-                                    size={100}
-                                    onClick={() => {
-                                        this.onClickToAvatar(user);
-                                    }}
-                                />
-                            </TableRowColumn>
-                            <TableRowColumn>{user.login}</TableRowColumn>
+            <div className="">
+                <Table>
+                    <TableHeader displaySelectAll={false} adjustForCheckbox={false}>
+                        <TableRow>
+                            <TableHeaderColumn>Avatar</TableHeaderColumn>
+                            <TableHeaderColumn>Name</TableHeaderColumn>
                         </TableRow>
-                    ))}
-                </TableBody>
-            </Table>
+                    </TableHeader>
+                    <TableBody displayRowCheckbox={false}>
+                        {users.map(user => (
+                            <TableRow className="results-panel__row" key={user.id}>
+                                <TableRowColumn>
+                                    <Avatar
+                                        src={user.avatarUrl}
+                                        size={100}
+                                        onClick={() => {
+                                            this.onClickToAvatar(user);
+                                        }}
+                                    />
+                                </TableRowColumn>
+                                <TableRowColumn>{user.login}</TableRowColumn>
+                            </TableRow>
+                        ))}
+                    </TableBody>
+                </Table>
+            </div>
         );
     }
 
     render() {
         const { isUserDetailInfoOpened } = this.state;
         const {
-            selectedUserId, usersCount, users, onLoadUsers,
+            selectedUserId, usersCount, users, classNames, onLoadUsers,
         } = this.props;
 
+        const resultsPanelClassNames = classnames('results-panel', classNames);
+
         return (
-            <div className="results-panel">
+            <div className={resultsPanelClassNames}>
                 <Paper className="results-panel__paper-container" zDepth={3}>
                     <h4>{`All users count : ${usersCount}`}</h4>
                     <h4>{`Current number of users: ${users.length}`}</h4>

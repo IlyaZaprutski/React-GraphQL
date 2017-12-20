@@ -7,7 +7,13 @@ import { GetUserDetailInfoQuery } from 'main/queries/user-queries';
 export default graphql(GetUserDetailInfoQuery, {
     props: ({ data }) => {
         if (data.loading) {
-            return { isLoading: true, userId: data.variables.userId };
+            return {
+                isLoading: true,
+                userId: data.variables.userId,
+                avatarUrl: '',
+                userName: '',
+                repositories: [],
+            };
         }
 
         return {

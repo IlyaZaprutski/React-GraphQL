@@ -47,7 +47,7 @@ export default graphql(SearchUsersQuery, {
     options: ({ searchString }) => ({
         variables: {
             searchString: `${searchString} type:user in:login`,
-            skip: !searchString,
         },
+        skip: !searchString,
     }),
 })(ResultsPanel);

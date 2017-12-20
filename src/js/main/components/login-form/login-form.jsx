@@ -22,8 +22,13 @@ export default class LoginForm extends React.PureComponent {
         classNames: '',
     };
 
-    onChangeLogin = (e, val) => this.props.onChangeLogin(val);
-    onChangePassword = (e, val) => this.props.onChangePassword(val);
+    onChangeLogin = (e, val) => {
+        this.props.onChangeLogin(val);
+    };
+
+    onChangePassword = (e, val) => {
+        this.props.onChangePassword(val);
+    };
 
     render() {
         const {

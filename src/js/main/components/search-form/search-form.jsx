@@ -7,6 +7,8 @@ import TextField from 'material-ui/TextField';
 
 import './search-form.scss';
 
+const ESC_KEY_CODE = 27;
+
 export default class SearchForm extends React.PureComponent {
     static propTypes = {
         searchString: PropTypes.string.isRequired,
@@ -25,7 +27,7 @@ export default class SearchForm extends React.PureComponent {
     };
 
     onHandleESCBtn = (e) => {
-        if (e.keyCode === 27) {
+        if (e.keyCode === ESC_KEY_CODE) {
             this.props.onChangeSearchString('');
         }
     };

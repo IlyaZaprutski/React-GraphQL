@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import classnames from 'classnames';
 
 import Dialog from 'material-ui/Dialog';
 import FlatButton from 'material-ui/FlatButton';
@@ -21,71 +22,78 @@ export default class UserDetailInfo extends React.PureComponent {
     static propTypes = {
         isOpen: PropTypes.bool.isRequired,
         isLoading: PropTypes.bool.isRequired,
-        avatarUrl: PropTypes.string,
-        userName: PropTypes.string,
-
+        avatarUrl: PropTypes.string.isRequired,
+        userName: PropTypes.string.isRequired,
         repositories: PropTypes.arrayOf(PropTypes.shape({
             id: PropTypes.string.isRequired,
             name: PropTypes.string.isRequired,
             countIssues: PropTypes.number.isRequired,
             description: PropTypes.string,
-        })),
-
+        })).isRequired,
         onClose: PropTypes.func.isRequired,
+        classNames: PropTypes.string,
     };
 
     static defaultProps = {
-        avatarUrl: '',
-        userName: '',
-        repositories: [],
+        classNames: '',
     };
 
     render() {
         const {
-            userName, avatarUrl, repositories, isOpen, isLoading, onClose,
+            userName,
+            avatarUrl,
+            repositories,
+            isOpen,
+            isLoading,
+            classNames,
+            onClose,
         } = this.props;
 
+        const userDetailInfoDialogClassNames = classnames('user-detail-info-dialog', classNames);
+
         return (
-            <Dialog
-                title={userName}
-                actions={[<FlatButton label="Cancel" primary onClick={onClose} />]}
-                modal={false}
-                open={isOpen}
-                className="user-detail-info-dialog"
-                autoScrollBodyContent
-            >
-                {isLoading ? (
-                    <div className="user-detail-info-dialog__spinner-container">
-                        <CircularProgress size={60} thickness={7} />
-                    </div>
-                ) : (
-                    <div>
-                        <Avatar src={avatarUrl} size={100} />
-                        {repositories.length === 0 ? (
-                            <div>User have not got repositories</div>
-                        ) : (
-                            <Table>
-                                <TableHeader displaySelectAll={false} adjustForCheckbox={false}>
-                                    <TableRow>
-                                        <TableHeaderColumn>Repo Name</TableHeaderColumn>
-                                        <TableHeaderColumn>Description</TableHeaderColumn>
-                                        <TableHeaderColumn>Number of issues</TableHeaderColumn>
-                                    </TableRow>
-                                </TableHeader>
-                                <TableBody displayRowCheckbox={false}>
-                                    {repositories.map(repo => (
-                                        <TableRow key={repo.id}>
-                                            <TableRowColumn>{repo.name}</TableRowColumn>
-                                            <TableRowColumn>{repo.description}</TableRowColumn>
-                                            <TableRowColumn>{repo.countIssues}</TableRowColumn>
+            <div className={userDetailInfoDialogClassNames}>
+                <Dialog
+                    title={userName}
+                    actions={[<FlatButton label="Cancel" primary onClick={onClose} />]}
+                    modal={false}
+                    open={isOpen}
+                    className="user-detail-info-dialog"
+                    autoScrollBodyContent
+                >
+                    {isLoading ? (
+                        <div className="user-detail-info-dialog__spinner-container">
+                            <CircularProgress size={60} thickness={7} />
+                        </div>
+                    ) : (
+                        <div>
+                            <Avatar src={avatarUrl} size={100} />
+                            {repositories.length === 0 ? (
+                                <div>User have not got repositories</div>
+                            ) : (
+                                <Table>
+                                    <TableHeader displaySelectAll={false} adjustForCheckbox={false}>
+                                        <TableRow>
+                                            <TableHeaderColumn>Repo Name</TableHeaderColumn>
+                                            <TableHeaderColumn>Description</TableHeaderColumn>
+                                            <TableHeaderColumn>Number of issues</TableHeaderColumn>
                                         </TableRow>
-                                    ))}
-                                </TableBody>
-                            </Table>
-                        )}
-                    </div>
-                )}
-            </Dialog>
+                                    </TableHeader>
+                                    <TableBody displayRowCheckbox={false}>
+                                        {repositories.map(repo => (
+                                            <TableRow key={repo.id}>
+                                                <TableRowColumn>{repo.name}</TableRowColumn>
+                                                <TableRowColumn>{repo.description}</TableRowColumn>
+                                                <TableRowColumn>{repo.countIssues}</TableRowColumn>
+                                            </TableRow>
+                                        ))}
+                                    </TableBody>
+                                </Table>
+                            )}
+                        </div>
+                    )}
+                </Dialog>
+            </div>
         );
     }
 }
