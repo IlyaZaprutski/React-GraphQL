@@ -23,13 +23,16 @@ export const loginSuccess = createAction(ActionTypes.LOGIN_SUCCESS, token => ({
 export const loginError = createAction(ActionTypes.LOGIN_ERROR);
 
 export const login = () => (dispatch, getState) => {
-    const state = getState();
+    const { authInfo } = getState();
 
-    LoginController.login(state.authInfo.get('login'), state.authInfo.get('password')).then(
+    LoginController.login(authInfo.get('login'), authInfo.get('password')).then(
         (token) => {
             localStorage.setItem('token', token);
             dispatch(loginSuccess(token));
         },
-        error => dispatch(loginError(error)),
+        (error) => {
+            alert(`Unauthorized Error for ${authInfo.get('login')}`);
+            dispatch(loginError(error));
+        },
     );
 };

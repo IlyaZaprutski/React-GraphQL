@@ -9,6 +9,8 @@ export default connect(
         isHaveAccess: state.authInfo.get('isHaveAccess'),
         searchString: state.mainInfo.get('searchString'),
         selectedUserId: state.mainInfo.get('selectedUserId'),
+        isUnauthorizedError: state.authInfo.get('isUnauthorizedError'),
+        errorMsg: state.authInfo.get('errorMsg'),
     }),
     dispatch => ({
         onSelectUser: userId => dispatch(changeSelectedUser(userId)),
