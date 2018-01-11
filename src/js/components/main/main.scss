@@ -1,0 +1,27 @@
+.main {
+    &__app-bar {
+        position: fixed !important;
+        top: 0;
+        left: 0;
+    }
+    &__component {
+        margin: 8px;
+    }
+
+    &__content {
+        margin-top: 72px;
+        margin-left: 0;
+
+        transition: transform 450ms cubic-bezier(0, 0, 0.2, 1) 0ms;
+
+        &_left-shifted {
+            margin-left: 256px;
+        }
+    }
+
+    &__nav-link_active {
+        .main__nav-link-title {
+            background-color: rgba(0, 0, 0, 0.2) !important;
+        }
+    }
+}
