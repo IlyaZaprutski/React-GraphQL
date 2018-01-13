@@ -4,7 +4,7 @@ import { Record } from 'immutable';
 import { changeSearchString } from 'actions/repositories-info-actions';
 
 const RepositoriesInfoRecord = Record({
-    searchString: '',
+    searchString: 'React-GraphQL-Ilya',
 });
 
 export default handleActions(

@@ -6,6 +6,7 @@ import { BrowserRouter as Router, Route, NavLink } from 'react-router-dom';
 import AppBar from 'material-ui/AppBar';
 import Drawer from 'material-ui/Drawer';
 import MenuItem from 'material-ui/MenuItem';
+import Avatar from 'material-ui/Avatar';
 
 import LoginFormContainer from 'containers/login-form-container';
 
@@ -15,6 +16,8 @@ import './main.scss';
 
 export default class Main extends React.PureComponent {
     static propTypes = {
+        userLogin: PropTypes.string.isRequired,
+        userAvatarUrl: PropTypes.string.isRequired,
         isHaveAccess: PropTypes.bool.isRequired,
         classNames: PropTypes.string,
     };
@@ -34,7 +37,7 @@ export default class Main extends React.PureComponent {
     };
 
     getContent() {
-        const { isHaveAccess } = this.props;
+        const { isHaveAccess, userAvatarUrl, userLogin } = this.props;
 
         const mainContentClassNames = classnames('main__content', {
             'main__content_left-shifted': this.state.isMenuOpen,
@@ -48,6 +51,12 @@ export default class Main extends React.PureComponent {
                             title="React + GraphQL"
                             onLeftIconButtonClick={this.onToggleMenuClick}
                             className="main__app-bar"
+                            iconElementRight={
+                                <div className="main__user-info">
+                                    <div className="main__user-login">{userLogin}</div>
+                                    <Avatar src={userAvatarUrl} size={50} />
+                                </div>
+                            }
                         />
                         <div className="main__nav">
                             <Drawer open={this.state.isMenuOpen} containerStyle={{ marginTop: 64 }}>

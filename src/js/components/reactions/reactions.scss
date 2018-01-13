@@ -1,0 +1,8 @@
+.reactions {
+    display: flex;
+    align-items: center;
+
+    &__add-reaction-btn-container {
+        padding: 24px 16px;
+    }
+}

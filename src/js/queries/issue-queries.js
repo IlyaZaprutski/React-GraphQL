@@ -1,5 +1,8 @@
 import gql from 'graphql-tag';
 
+import ReactionGroupFragment from 'fragments/reaction-groups-fragments';
+import IssueCommentFragment from 'fragments/issue-comment-fragment';
+
 export const GetIssueInfo = gql`
     query GetIssueInfo($issueId: ID!) {
         node(id: $issueId) {
@@ -12,41 +15,19 @@ export const GetIssueInfo = gql`
                     login
                     avatarUrl
                 }
-                reactions(first: 50) {
-                    edges {
-                        node {
-                            user {
-                                avatarUrl
-                                login
-                            }
-                            content
-                        }
-                    }
+                reactionGroups {
+                    ...ReactionGroupFragment
                 }
                 comments(first: 50) {
                     edges {
                         node {
-                            id
-                            author {
-                                login
-                                avatarUrl
-                            }
-                            bodyHTML
-                            reactions(first: 50) {
-                                edges {
-                                    node {
-                                        user {
-                                            avatarUrl
-                                            login
-                                        }
-                                        content
-                                    }
-                                }
-                            }
+                            ...IssueCommentFragment
                         }
                     }
                 }
             }
         }
     }
+    ${ReactionGroupFragment}
+    ${IssueCommentFragment}
 `;

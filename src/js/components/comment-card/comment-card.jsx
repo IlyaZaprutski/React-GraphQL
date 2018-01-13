@@ -4,17 +4,25 @@ import classnames from 'classnames';
 
 import { Card, CardHeader, CardText } from 'material-ui/Card';
 
-import Reactions from 'components/reactions/reactions';
+import IssueReactionGQLContainer from 'gql-containers/issue-reactions-gql-container';
+
+import './comment-card.scss';
 
 export default class CommentCard extends React.PureComponent {
     static propTypes = {
+        id: PropTypes.string.isRequired,
         authorLogin: PropTypes.string.isRequired,
         authorAvatarUrl: PropTypes.string.isRequired,
         bodyHTML: PropTypes.string.isRequired,
-        reactions: PropTypes.arrayOf(PropTypes.shape({
+        reactionGroups: PropTypes.arrayOf(PropTypes.shape({
             reactionType: PropTypes.string.isRequired,
-            userLogin: PropTypes.string.isRequired,
-            userAvatarUrl: PropTypes.string.isRequired,
+            isReacted: PropTypes.bool.isRequired,
+            reactionCount: PropTypes.number.isRequired,
+            users: PropTypes.arrayOf(PropTypes.shape({
+                id: PropTypes.string.isRequired,
+                login: PropTypes.string.isRequired,
+                avatarUrl: PropTypes.string.isRequired,
+            })).isRequired,
         })).isRequired,
         classNames: PropTypes.string,
     };
@@ -25,7 +33,12 @@ export default class CommentCard extends React.PureComponent {
 
     render() {
         const {
-            authorLogin, authorAvatarUrl, bodyHTML, classNames, reactions,
+            id,
+            authorLogin,
+            authorAvatarUrl,
+            bodyHTML,
+            classNames,
+            reactionGroups,
         } = this.props;
 
         const commentCardClassNames = classnames('comment-card', classNames);
@@ -34,11 +47,11 @@ export default class CommentCard extends React.PureComponent {
             <div className={commentCardClassNames}>
                 <Card>
                     <CardHeader title={authorLogin} avatar={authorAvatarUrl} />
-                    <CardText>
+                    <CardText className="comment-card__text-html">
                         <div dangerouslySetInnerHTML={{ __html: bodyHTML }} />
                     </CardText>
 
-                    <Reactions reactions={reactions} />
+                    <IssueReactionGQLContainer id={id} reactionGroups={reactionGroups} />
                 </Card>
             </div>
         );

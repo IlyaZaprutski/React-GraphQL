@@ -3,11 +3,16 @@ import { graphql } from 'react-apollo';
 import IssueInfo from 'components/issue-info/issue-info';
 import { GetIssueInfo } from 'queries/issue-queries';
 
-const parseReactions = reactions =>
-    reactions.map(({ node: reactionNode }) => ({
-        reactionType: reactionNode.content,
-        userLogin: reactionNode.user.login,
-        userAvatarUrl: reactionNode.user.avatarUrl,
+const parseReactions = reactionGroups =>
+    reactionGroups.map(reactionInfo => ({
+        reactionType: reactionInfo.content,
+        isReacted: reactionInfo.viewerHasReacted,
+        reactionCount: reactionInfo.users.totalCount,
+        users: reactionInfo.users.edges.map(({ node: { id, login, avatarUrl } }) => ({
+            id,
+            login,
+            avatarUrl,
+        })),
     }));
 
 const mapDataToProps = ({ data }) => {
@@ -20,7 +25,7 @@ const mapDataToProps = ({ data }) => {
             isClosed: false,
             authorLogin: '',
             authorAvatarUrl: '',
-            reactions: [],
+            reactionGroups: [],
             comments: [],
         };
     }
@@ -30,7 +35,7 @@ const mapDataToProps = ({ data }) => {
         authorLogin: node.author.login,
         authorAvatarUrl: node.author.avatarUrl,
         bodyHTML: node.bodyHTML,
-        reactions: parseReactions(node.reactions.edges),
+        reactionGroups: parseReactions(node.reactionGroups),
     }));
 
     return {
@@ -41,7 +46,7 @@ const mapDataToProps = ({ data }) => {
         isClosed: data.node.closed,
         authorLogin: data.node.author.login,
         authorAvatarUrl: data.node.author.avatarUrl,
-        reactions: parseReactions(data.node.reactions.edges),
+        reactionGroups: parseReactions(data.node.reactionGroups),
         comments,
     };
 };
