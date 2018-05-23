@@ -5,6 +5,7 @@ const webpack = require('webpack');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+// const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
 
 module.exports = {
     entry: {
@@ -13,6 +14,7 @@ module.exports = {
 
     output: {
         path: path.join(__dirname, 'dist'),
+        publicPath: '/',
         filename: '[name].js',
     },
 
@@ -35,6 +37,7 @@ module.exports = {
     },
 
     plugins: [
+        // new BundleAnalyzerPlugin(),
         new CleanWebpackPlugin(['dist']),
         new CopyWebpackPlugin([
             {

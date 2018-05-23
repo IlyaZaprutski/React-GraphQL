@@ -9,23 +9,27 @@ export default [
         path: '/UsersInfo',
         component: UsersInfoContainer,
         props: {},
+        isMenuVisible: true,
     },
     {
         name: 'Repositories Info',
         path: '/RepositoriesInfo',
         component: RepositoriesInfoContainer,
         props: {},
+        isMenuVisible: true,
     },
     {
         name: 'Repository Issues',
         path: '/RepositoryIssues/:repositoryId',
         component: RepositoryIssuesContainer,
         props: {},
+        isMenuVisible: false,
     },
     {
         name: 'Issue',
         path: '/Issue/:issueId',
         component: IssueInfoContainer,
         props: {},
+        isMenuVisible: false,
     },
 ];

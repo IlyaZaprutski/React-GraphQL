@@ -8,7 +8,26 @@ module.exports = {
     module: {
         ...WebpackBaseConfig.module,
         rules: [
-            ...WebpackBaseConfig.module.rules,
+            {
+                test: /\.jsx?$/,
+                exclude: /(node_modules)/,
+
+                use: {
+                    loader: 'babel-loader',
+                    options: {
+                        presets: ['es2015', 'stage-2', 'react'],
+                        plugins: [
+                            'transform-decorators-legacy',
+                            'transform-class-properties',
+                            // new compress feature
+                            'transform-react-constant-elements',
+                            'transform-react-inline-elements',
+                            'transform-react-remove-prop-types',
+                        ],
+                        cacheDirectory: true,
+                    },
+                },
+            },
             {
                 test: /\.scss$/,
                 use: ExtractTextPlugin.extract({

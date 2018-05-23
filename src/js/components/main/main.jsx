@@ -60,7 +60,7 @@ export default class Main extends React.PureComponent {
                         />
                         <div className="main__nav">
                             <Drawer open={this.state.isMenuOpen} containerStyle={{ marginTop: 64 }}>
-                                {Routes.map(route => (
+                                {Routes.filter(r => r.isMenuVisible).map(route => (
                                     <NavLink
                                         key={route.path}
                                         to={route.path}
